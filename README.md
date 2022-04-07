@@ -9,6 +9,20 @@
 2. Install the gem using Bundler:
 
         bundle install
+        
+3. Configure:
+
+        DpdClient.configure(
+          username: ENV['DPD_USER'],
+          password: ENV['DPD_PASS'],
+          api_url: 'https://easyship.si/api/',
+          sender_data: {
+            name: "Company",
+            street: "Street address",
+            postal: "Postal code",
+            city: "City",
+            phone: "Phone no."
+          })
 
 3. Restart your server
 
