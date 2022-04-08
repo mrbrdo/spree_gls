@@ -1,0 +1,15 @@
+en:
+  spree:
+    dpd: DPD
+    admin:
+      tab:
+        dpd: DPD
+    dpd_carorder:
+      title: DPD Carorder
+      time_from: Time From
+      time_to: Time To
+      today: Today
+      tomorrow: Tomorrow
+      date_custom: Custom Date
+      date: Date
+      created_successfully: 'DPD Carorder created successfully for %{date} between %{time_from}-%{time_to}!'

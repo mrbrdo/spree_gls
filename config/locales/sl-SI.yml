@@ -1,0 +1,15 @@
+sl-SI:
+  spree:
+    dpd: DPD
+    admin:
+      tab:
+        dpd: DPD
+    dpd_carorder:
+      title: Naroči DPD Prevzem
+      time_from: Ura od
+      time_to: Ura do
+      today: Danes
+      tomorrow: Jutri
+      date_custom: Na datum
+      date: Datum
+      created_successfully: 'DPD prevzem je bil uspešno naročen za %{date} med %{time_from}-%{time_to}!'
