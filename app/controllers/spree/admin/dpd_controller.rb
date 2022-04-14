@@ -11,14 +11,14 @@ module Spree
           date_today: date_today,
           date_tomorrow: !date_today,
           date_custom: false,
-          custom_date: date_today ? Date.today : Date.tomorrow
+          custom_date: date_today ? Date.current : Date.tomorrow
         )
       end
       
       def create
         date =
           if params[:date] == 'today'
-            Date.today
+            Date.current
           elsif params[:date] == 'tomorrow'
             Date.tomorrow
           elsif params[:custom_date].present?

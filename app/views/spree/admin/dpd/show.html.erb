@@ -19,7 +19,7 @@
       <div class='col-12 col-md-4'>
         <%= label_tag :date_today do %>
           <%= radio_button_tag 'date', 'today', @dpd.date_today %>
-          <%= Spree.t('dpd_carorder.today') %> (<%= Date.today.strftime("%d.%m") %>)
+          <%= Spree.t('dpd_carorder.today') %> (<%= Date.current.strftime("%d.%m") %>)
         <% end %>
         <br>
         <%= label_tag :date_tomorrow do %>
