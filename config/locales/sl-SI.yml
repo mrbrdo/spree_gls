@@ -4,6 +4,9 @@ sl-SI:
     admin:
       tab:
         dpd: DPD
+      order:
+        events:
+          dpd_label: DPD Nalepka
     dpd_carorder:
       title: Naroči DPD Prevzem
       time_from: Ura od
