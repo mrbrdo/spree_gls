@@ -16,3 +16,10 @@ sl-SI:
       date_custom: Na datum
       date: Datum
       created_successfully: 'DPD prevzem je bil uspešno naročen za %{date} med %{time_from}-%{time_to}!'
+    dpd_parcels:
+      title: DPD Pošiljke
+      order_number: Št. Naročila
+      customer: Stranka
+      total: Znesek
+      weight: Teža
+      label_download: Prenos Nalepke

@@ -62,7 +62,7 @@ module Spree
         end
 
         if dpd_parcel.pdf_label.attached?
-          redirect_to main_app.url_for(dpd_parcel.pdf_label)
+          display_label(dpd_parcel)
         else
           redirect_back fallback_location: spree.edit_admin_order_url(id: order.number), notice: "Could not generate DPD label!"
         end
@@ -75,6 +75,20 @@ module Spree
           [$1.to_i, $2.to_i]
         else
           fail "Cannot parse time #{time_string}"
+        end
+      end
+
+      def display_label(dpd_parcel)
+        if params[:label_placement].in?(['tr', 'bl', 'br'])
+          order = dpd_parcel.spree_shipment.order
+          send_data(
+            dpd_parcel.pdf_label_translated(params[:label_placement]),
+            filename: "dpd-#{order.number}.pdf",
+            type: 'application/pdf',
+            disposition: 'attachment'
+          )
+        else
+          redirect_to main_app.url_for(dpd_parcel.pdf_label)
         end
       end
     end

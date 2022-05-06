@@ -1,0 +1,29 @@
+<h2><%= Spree.t('dpd_parcels.title') %></h2>
+
+<table style="width: 100%">
+  <tr>
+    <th><%= Spree.t('dpd_parcels.order_number') %></th>
+    <th><%= Spree.t('dpd_parcels.customer') %></th>
+    <th><%= Spree.t('dpd_parcels.total') %></th>
+    <th><%= Spree.t('dpd_parcels.weight') %></th>
+    <th><%= Spree.t('dpd_parcels.label_download') %></th>
+  </tr>
+  <% Spree::DpdParcel.order(updated_at: :desc).limit(10).each do |parcel| %>
+    <% order = parcel.spree_shipment.order %>
+    <tr>
+      <td><%= link_to order.number, spree.edit_admin_order_url(id: order.number) %></td>
+      <td><%= order.shipping_address.first_name %> <%= order.shipping_address.last_name %></td>
+      <td><%= order.display_total %></td>
+      <td><%= parcel.spree_shipment.to_package.weight.to_f.round(2) %>kg</td>
+      <td>
+        <%= link_to "Original", spree.download_label_admin_dpd_url(order_number: order.number), target: '_blank' %>
+        |
+        <%= link_to "TR", spree.download_label_admin_dpd_url(order_number: order.number, label_placement: 'tr'), target: '_blank' %>
+        |
+        <%= link_to "BL", spree.download_label_admin_dpd_url(order_number: order.number, label_placement: 'bl'), target: '_blank' %>
+        |
+        <%= link_to "BR", spree.download_label_admin_dpd_url(order_number: order.number, label_placement: 'br'), target: '_blank' %>
+      </td>
+    </tr>
+  <% end %>
+</table>

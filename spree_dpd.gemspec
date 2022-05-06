@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'spree_auth_devise', '>= 3.1.0', '< 5.0'
   s.add_dependency 'spree_extension'
   s.add_dependency 'faraday'
+  s.add_dependency 'hexapdf', '~> 0.22'
 
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'capybara-screenshot'
