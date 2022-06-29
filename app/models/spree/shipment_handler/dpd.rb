@@ -18,8 +18,10 @@ module Spree
 
       protected
       def send_shipped_email
-        # Delay email a bit because DPD tracking code is not working immediately
-        Spree::ShipmentMailer.shipped_email(@shipment.id).deliver_later(wait: 1.hour)
+        if @shipment.tracking != 'shipped'
+          # Delay email a bit because DPD tracking code is not working immediately
+          Spree::ShipmentMailer.shipped_email(@shipment.id).deliver_later(wait: 1.hour)
+        end
       end
     end
   end
