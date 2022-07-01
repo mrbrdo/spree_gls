@@ -2,18 +2,15 @@ module Spree
   class ShipmentHandler
     class Dpd < Spree::ShipmentHandler
       def update_order_shipment_state
-        order = @shipment.order
-        new_state = OrderUpdater.new(order).update_shipment_state
+        super
 
         # If tracking code was manually set, don't create new DPD order
-        if @shipment.tracking.blank? && new_state == 'shipped'
+        if @shipment.state == 'shipped' && @shipment.tracking.blank?
           tracking_all = SpreeDpd::Shipment.new(@shipment).create_order_dpd
           # TODO: there can be multiple tracking codes, handle this
           tracking = tracking_all.first
           @shipment.update tracking: tracking
         end
-
-        order.update_columns(shipment_state: new_state, updated_at: Time.current)
       end
 
       protected
