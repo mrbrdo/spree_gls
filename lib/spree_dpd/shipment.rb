@@ -34,6 +34,10 @@ module SpreeDpd
       end
 
       street = order.shipping_address.address1
+      if order.shipping_address.address2.present?
+        # some people write street number into address2
+        street += " " + order.shipping_address.address2
+      end
       rPropNum = ""
       if street =~ /\A(.+)\s(\d+[a-z]?)\s*\z/
         street = $1
