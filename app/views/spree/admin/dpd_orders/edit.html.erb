@@ -1,0 +1,59 @@
+<%= render 'order_actions', order: @order, events: @order_events %>
+
+<%= render 'spree/admin/shared/order_tabs', current: :dpd %>
+
+<% content_for :page_title do %>
+  / DPD
+<% end %>
+
+<div data-hook="admin_dpd_order_edit_header">
+  <%= render 'spree/admin/shared/error_messages', target: @order %>
+</div>
+
+<% if @order.payments.valid.any? && @order.considered_risky? %>
+  <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.valid.last %>
+<% end %>
+
+<% if @tracking_all %>
+  <p>
+    <b>DPD tracking:</b><br>
+    <% @tracking_all.each do |tracking| %>
+      <%= tracking %><br>
+    <% end %>
+  </p>
+<% end %>
+
+<%= form_tag spree.admin_dpd_orders_url do %>
+  <div data-hook="admin_order_dpd_form_fields">
+    <div class="card mb-3" data-hook="custom_dpd_order">
+
+      <div class="card-header">
+        <h1 class="card-title mb-0 h5">
+          <%= Spree.t(:custom_dpd_order) %>
+        </h1>
+      </div>
+
+      <div class="card-body">
+        <%= hidden_field_tag 'order_number', @order.number %>
+        <div data-hook="custom_dpd_order_fields" class="row">
+          <div class="col-12 col-lg-8">
+            <div class="form-group">
+              <%= label_tag 'weight_kg', Spree.t(:weight_kg) %>
+              <% if can? :edit, @order %>
+                <%= text_field_tag :weight_kg, nil, class: 'form-control' %>
+              <% else %>
+                <p>No access</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <% if can? :edit, @order %>
+          <div class="form-actions" data-hook="buttons">
+            <%= button Spree.t('actions.new'), 'save.svg' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
