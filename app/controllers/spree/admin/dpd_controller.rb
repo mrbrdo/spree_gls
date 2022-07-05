@@ -44,8 +44,8 @@ module Spree
       end
 
       def download_label
-        order = Spree::Order.find_by(number: params[:order_number])
-        shipment = order.shipments.first
+        shipment = Spree::Shipment.find_by(number: params[:shipment_number])
+        order = shipment.order
         dpd_parcel =
           Spree::DpdParcel.where(spree_shipment_id: shipment&.id).
           first_or_initialize(tracking_code: shipment&.tracking)

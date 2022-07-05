@@ -16,13 +16,13 @@
       <td><%= order.display_total %></td>
       <td><%= parcel.spree_shipment.to_package.weight.to_f.round(2) %>kg</td>
       <td>
-        <%= link_to "Original", spree.download_label_admin_dpd_url(order_number: order.number), target: '_blank' %>
+        <%= link_to "Original", spree.download_label_admin_dpd_url(shipment_number: parcel.spree_shipment.number), target: '_blank' %>
         |
-        <%= link_to "TR", spree.download_label_admin_dpd_url(order_number: order.number, label_placement: 'tr'), target: '_blank' %>
+        <%= link_to "TR", spree.download_label_admin_dpd_url(shipment_number: parcel.spree_shipment.number, label_placement: 'tr'), target: '_blank' %>
         |
-        <%= link_to "BL", spree.download_label_admin_dpd_url(order_number: order.number, label_placement: 'bl'), target: '_blank' %>
+        <%= link_to "BL", spree.download_label_admin_dpd_url(shipment_number: parcel.spree_shipment.number, label_placement: 'bl'), target: '_blank' %>
         |
-        <%= link_to "BR", spree.download_label_admin_dpd_url(order_number: order.number, label_placement: 'br'), target: '_blank' %>
+        <%= link_to "BR", spree.download_label_admin_dpd_url(shipment_number: parcel.spree_shipment.number, label_placement: 'br'), target: '_blank' %>
       </td>
     </tr>
   <% end %>
