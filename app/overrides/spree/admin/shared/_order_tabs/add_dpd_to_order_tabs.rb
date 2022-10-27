@@ -1,7 +1,7 @@
 Deface::Override.new(
   virtual_path: 'spree/admin/shared/_order_tabs',
   name: 'add_dpd_to_order_tabs',
-  insert_bottom: 'ul.nav',
+  insert_before: "erb[silent]:contains(':index, Spree::ReturnAuthorization')",
   text: <<-HTML
 
     <% if can? :update, @order %>
