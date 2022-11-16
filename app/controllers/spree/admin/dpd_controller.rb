@@ -6,8 +6,8 @@ module Spree
       def show
         date_today = DateTime.now.hour < 15
         @dpd = OpenStruct.new(
-          time_from: '12:00',
-          time_to: '14:30',
+          time_from: SpreeDpd.config.pickup_time_from,
+          time_to: SpreeDpd.config.pickup_time_to,
           date_today: date_today,
           date_tomorrow: !date_today,
           date_custom: false,
