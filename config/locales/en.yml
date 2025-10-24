@@ -1,15 +1,15 @@
 en:
   spree:
-    dpd: DPD
+    gls: GLS
     admin:
       tab:
-        dpd: DPD
-    dpd_carorder:
-      title: DPD Carorder
+        gls: GLS
+    gls_carorder:
+      title: GLS Carorder
       time_from: Time From
       time_to: Time To
       today: Today
       tomorrow: Tomorrow
       date_custom: Custom Date
       date: Date
-      created_successfully: 'DPD Carorder created successfully for %{date} between %{time_from}-%{time_to}!'
+      created_successfully: 'GLS Carorder created successfully for %{date} between %{time_from}-%{time_to}!'

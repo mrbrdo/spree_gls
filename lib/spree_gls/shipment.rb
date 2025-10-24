@@ -1,26 +1,26 @@
-module SpreeDpd
+module SpreeGls
   class Shipment
     def self.for_order(order_number, weight_kg)
       order = ::Spree::Order.find_by(number: order_number)
       shipment = order.shipments.first
-      new(shipment).create_order_dpd_weight(shipment, weight_kg)
+      new(shipment).create_order_gls_weight(shipment, weight_kg)
     end
 
     attr_reader :shipment
     def initialize(shipment)
       @shipment = shipment
-      @dpd_client = DpdClient.new
+      @gls_client = GlsClient.new
     end
 
-    def create_order_dpd
+    def create_order_gls
       weight_kg = shipment.to_package.weight.to_f
 
-      tracking_codes = create_order_dpd_weight(shipment, weight_kg)
+      tracking_codes = create_order_gls_weight(shipment, weight_kg)
 
       Array(tracking_codes)
     end
 
-    def create_order_dpd_weight(shipment, weight_kg)
+    def create_order_gls_weight(shipment, weight_kg)
       order = shipment.order
 
       contact_person = nil
@@ -44,7 +44,7 @@ module SpreeDpd
         rPropNum = $2
       end
 
-      @dpd_client.create_package(
+      @gls_client.create_package(
         name1: name1[0,35],
         name2: name2[0,35],
         contact: contact_person,
@@ -57,7 +57,7 @@ module SpreeDpd
         phone: order.shipping_address.phone,
         weight: weight_kg.to_s, # delimited by dot
         order_number: order.number, # reference
-        parcel_type: "D", # DPD Classic
+        parcel_type: "D", # GLS Classic
         num_of_parcel: "1"
       )
     end

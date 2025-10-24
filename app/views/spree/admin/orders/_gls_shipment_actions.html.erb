@@ -1,6 +1,6 @@
 <% if shipment.tracking && can?(:fire, shipment.order) %>
-  <%=  button_link_to Spree.t(:dpd_label, scope: 'admin.order.events'),
-      spree.download_label_admin_dpd_url(shipment_number: shipment.number),
+  <%=  button_link_to Spree.t(:gls_label, scope: 'admin.order.events'),
+      spree.download_label_admin_gls_url(shipment_number: shipment.number),
       method: :get,
       icon: 'shipping.svg',
       class: 'ml-auto btn btn-success',

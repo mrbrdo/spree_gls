@@ -1,7 +1,7 @@
 require 'hexapdf'
 
 module Spree
-  class DpdParcel < Spree::Base
+  class GlsParcel < Spree::Base
     belongs_to :spree_shipment, class_name: 'Spree::Shipment'
     validates :tracking_code, presence: true
 
@@ -10,7 +10,7 @@ module Spree
     after_create :cleanup_old_parcels
 
     def cleanup_old_parcels
-      Spree::DpdParcel.where("updated_at < ?", 1.month.ago).each(&:destroy!)
+      Spree::GlsParcel.where("updated_at < ?", 1.month.ago).each(&:destroy!)
     end
 
     def pdf_label_translated(move_to)

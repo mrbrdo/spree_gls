@@ -1,7 +1,7 @@
 require 'faraday'
 require 'cgi'
 
-class DpdClient
+class GlsClient
   class << self
     attr_reader :configuration
     def configure(config)
@@ -26,7 +26,7 @@ class DpdClient
         if json['status'] == 'ok'
           return json['pl_number']
         else
-          puts "DPD create_package error: #{r.body}"
+          puts "GLS create_package error: #{r.body}"
         end
       end
     end

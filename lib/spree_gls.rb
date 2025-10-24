@@ -1,12 +1,12 @@
 require 'dry-configurable'
 require 'spree_core'
 require 'spree_extension'
-require 'spree_dpd/version'
-require 'spree_dpd/engine'
-require 'spree_dpd/railtie' if defined?(Rails)
+require 'spree_gls/version'
+require 'spree_gls/engine'
+require 'spree_gls/railtie' if defined?(Rails)
 require 'sass/rails'
 
-module SpreeDpd
+module SpreeGls
   extend Dry::Configurable
 
   setting :pickup_time_from,  default: '9:00'

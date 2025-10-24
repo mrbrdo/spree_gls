@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class DpdOrdersController < OrdersController
+    class GlsOrdersController < OrdersController
       before_action :load_order, only: %i[
         edit
       ]
@@ -11,7 +11,7 @@ module Spree
 
       def create
         @order = scope.includes(:adjustments).find_by!(number: params[:order_number])
-        @tracking_all = SpreeDpd::Shipment.for_order(
+        @tracking_all = SpreeGls::Shipment.for_order(
           params[:order_number],
           params[:weight_kg].to_s.gsub(',', '.').to_f)
         render 'edit'

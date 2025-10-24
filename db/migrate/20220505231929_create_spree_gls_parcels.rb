@@ -1,6 +1,6 @@
-class CreateSpreeDpdParcels < ActiveRecord::Migration[6.1]
+class CreateSpreeGlsParcels < ActiveRecord::Migration[6.1]
   def change
-    create_table :spree_dpd_parcels do |t|
+    create_table :spree_gls_parcels do |t|
       t.references :spree_shipment, null: false, foreign_key: true
       t.string :tracking_code
 

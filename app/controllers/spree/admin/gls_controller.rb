@@ -2,12 +2,12 @@ require 'ostruct'
 
 module Spree
   module Admin
-    class DpdController < Spree::Admin::BaseController
+    class GlsController < Spree::Admin::BaseController
       def show
         date_today = DateTime.now.hour < 15
-        @dpd = OpenStruct.new(
-          time_from: SpreeDpd.config.pickup_time_from,
-          time_to: SpreeDpd.config.pickup_time_to,
+        @gls = OpenStruct.new(
+          time_from: SpreeGls.config.pickup_time_from,
+          time_to: SpreeGls.config.pickup_time_to,
           date_today: date_today,
           date_tomorrow: !date_today,
           date_custom: false,
@@ -24,7 +24,7 @@ module Spree
           elsif params[:custom_date].present?
             Date.parse(params[:custom_date])
           else
-            fail "DPD carorder date not chosen!"
+            fail "GLS carorder date not chosen!"
           end
         # convert date to 00:00 (beginning of day) in current timezone
         time_start = date.to_time(:local).to_datetime
@@ -35,9 +35,9 @@ module Spree
         hours, mins = parse_time_to_a(params[:time_to])
         time_to = time_start + hours.hours + mins.minutes
 
-        DpdClient.new.create_carorder(time_from, time_to)
+        GlsClient.new.create_carorder(time_from, time_to)
 
-        redirect_to admin_dpd_path, notice: Spree.t('dpd_carorder.created_successfully',
+        redirect_to admin_gls_path, notice: Spree.t('gls_carorder.created_successfully',
           date: time_from.strftime('%d.%m.%Y'),
           time_from: time_from.strftime('%H:%M'),
           time_to: time_to.strftime('%H:%M'))
@@ -46,25 +46,25 @@ module Spree
       def download_label
         shipment = Spree::Shipment.find_by(number: params[:shipment_number])
         order = shipment.order
-        dpd_parcel =
-          Spree::DpdParcel.where(spree_shipment_id: shipment&.id).
+        gls_parcel =
+          Spree::GlsParcel.where(spree_shipment_id: shipment&.id).
           first_or_initialize(tracking_code: shipment&.tracking)
 
-        if !dpd_parcel.pdf_label.attached? && dpd_parcel.tracking_code
-          if pdf_data = DpdClient.new.get_pdf_label(dpd_parcel.tracking_code)
-            dpd_parcel.pdf_label.attach({
+        if !gls_parcel.pdf_label.attached? && gls_parcel.tracking_code
+          if pdf_data = GlsClient.new.get_pdf_label(gls_parcel.tracking_code)
+            gls_parcel.pdf_label.attach({
               io: StringIO.new(pdf_data),
-              filename: "dpd-#{order.number}.pdf",
+              filename: "gls-#{order.number}.pdf",
               content_type: 'application/pdf'
             })
-            dpd_parcel.save!
+            gls_parcel.save!
           end
         end
 
-        if dpd_parcel.pdf_label.attached?
-          display_label(dpd_parcel)
+        if gls_parcel.pdf_label.attached?
+          display_label(gls_parcel)
         else
-          redirect_back fallback_location: spree.edit_admin_order_url(id: order.number), notice: "Could not generate DPD label!"
+          redirect_back fallback_location: spree.edit_admin_order_url(id: order.number), notice: "Could not generate GLS label!"
         end
       end
 
@@ -78,17 +78,17 @@ module Spree
         end
       end
 
-      def display_label(dpd_parcel)
+      def display_label(gls_parcel)
         if params[:label_placement].in?(['tr', 'bl', 'br'])
-          order = dpd_parcel.spree_shipment.order
+          order = gls_parcel.spree_shipment.order
           send_data(
-            dpd_parcel.pdf_label_translated(params[:label_placement]),
-            filename: "dpd-#{order.number}.pdf",
+            gls_parcel.pdf_label_translated(params[:label_placement]),
+            filename: "gls-#{order.number}.pdf",
             type: 'application/pdf',
             disposition: 'attachment'
           )
         else
-          redirect_to main_app.url_for(dpd_parcel.pdf_label)
+          redirect_to main_app.url_for(gls_parcel.pdf_label)
         end
       end
     end

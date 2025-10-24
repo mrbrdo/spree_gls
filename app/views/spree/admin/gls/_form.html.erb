@@ -1,38 +1,38 @@
-<%= form_tag admin_dpd_path do |f| %>
+<%= form_tag admin_gls_path do |f| %>
   <fieldset>
     <div class="row">
       <div class="form-group field col-12 col-md-4">
-        <%= label_tag :time_from, Spree.t('dpd_carorder.time_from') %> <span class="required">*</span>
-        <%= text_field_tag 'time_from', @dpd.time_from %>
+        <%= label_tag :time_from, Spree.t('gls_carorder.time_from') %> <span class="required">*</span>
+        <%= text_field_tag 'time_from', @gls.time_from %>
       </div>
       <div class="form-group field col-12 col-md-4">
-        <%= label_tag :time_to, Spree.t('dpd_carorder.time_to') %> <span class="required">*</span>
-        <%= text_field_tag 'time_to', @dpd.time_to %>
+        <%= label_tag :time_to, Spree.t('gls_carorder.time_to') %> <span class="required">*</span>
+        <%= text_field_tag 'time_to', @gls.time_to %>
       </div>
     </div>
     <div>
       <div class='col-12 col-md-4'>
         <%= label_tag :date_today do %>
-          <%= radio_button_tag 'date', 'today', @dpd.date_today %>
-          <%= Spree.t('dpd_carorder.today') %> (<%= Date.current.strftime("%d.%m") %>)
+          <%= radio_button_tag 'date', 'today', @gls.date_today %>
+          <%= Spree.t('gls_carorder.today') %> (<%= Date.current.strftime("%d.%m") %>)
         <% end %>
         <br>
         <%= label_tag :date_tomorrow do %>
-          <%= radio_button_tag 'date', 'tomorrow', @dpd.date_tomorrow %>
-          <%= Spree.t('dpd_carorder.tomorrow') %> (<%= Date.tomorrow.strftime("%d.%m") %>)
+          <%= radio_button_tag 'date', 'tomorrow', @gls.date_tomorrow %>
+          <%= Spree.t('gls_carorder.tomorrow') %> (<%= Date.tomorrow.strftime("%d.%m") %>)
         <% end %>
         <br>
       </div>
       <div class="form-group field col-12 col-md-4">
         <%= label_tag :date_custom do %>
-          <%= radio_button_tag 'date', 'custom', @dpd.date_custom %>
-          <%= Spree.t('dpd_carorder.date_custom') %>
+          <%= radio_button_tag 'date', 'custom', @gls.date_custom %>
+          <%= Spree.t('gls_carorder.date_custom') %>
         <% end %>
         <div class="input-group datepicker"
              data-wrap="true"
              data-alt-format="<%= Spree.t(:fpr_human_friendly_date_format, scope: 'date_picker', default: 'M j, Y') %>">
           <%= text_field_tag :custom_date,
-                           datepicker_field_value(@dpd.custom_date),
+                           datepicker_field_value(@gls.custom_date),
                            placeholder: Spree.t(:select_a_date),
                            class: 'form-control shadow-none',
                            'data-input': '' %>

@@ -1,8 +1,0 @@
-<% content_for :page_title do %>
-  <%= link_to Spree.t(:dpd), spree.admin_dpd_url %> /
-  <%= Spree.t('dpd_carorder.title') %>
-<% end %>
-
-<%= render partial: 'spree/admin/dpd/form' %>
-<hr>
-<%= render partial: 'spree/admin/dpd/parcel_list' %>

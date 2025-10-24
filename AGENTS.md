@@ -1,4 +1,4 @@
-# Agent Guidelines for spree_dpd
+# Agent Guidelines for spree_gls
 
 ## Commands
 - **Test**: `bundle exec rake` | `bundle exec rspec spec/path/file_spec.rb` | `bundle exec rspec spec/path/file_spec.rb:42`
@@ -7,11 +7,11 @@
 ## Code Style
 - Ruby 2.7+, Rails engine extending Spree Commerce
 - Naming: `snake_case` files/methods, `CamelCase` classes, `SCREAMING_SNAKE_CASE` constants
-- Namespace: `Spree::` for models/controllers, plain classes for lib (e.g., `DpdClient`)
+- Namespace: `Spree::` for models/controllers, plain classes for lib (e.g., `GlsClient`)
 - Inherit: Controllers from `Spree::Admin::BaseController`, models from `Spree::Base`
 - Imports: `require` non-Rails deps (e.g., `require 'faraday'`), Rails autoloads Spree classes
 - Errors: Use `fail` for exceptions, check API status codes/content types
-- Config: `DpdClient.configure`, `SpreeDpd.config`
+- Config: `GlsClient.configure`, `SpreeGls.config`
 - DB: ActiveRecord associations/validations, migrations in `db/migrate/`
 - Views: ERB under `app/views/spree/admin/`, partials prefixed `_`
 - I18n: Keys in `config/locales/en.yml` and `sl-SI.yml`, use `Spree.t('key')`

@@ -1,9 +1,9 @@
-require 'spree_dpd'
+require 'spree_gls'
 require 'rails'
 
-module SpreeDpd
+module SpreeGls
   class Railtie < Rails::Railtie
-    railtie_name :spree_dpd
+    railtie_name :spree_gls
 
     rake_tasks do
       path = File.expand_path(__dir__)

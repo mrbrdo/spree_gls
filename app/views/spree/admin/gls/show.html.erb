@@ -1,0 +1,8 @@
+<% content_for :page_title do %>
+  <%= link_to Spree.t(:gls), spree.admin_gls_url %> /
+  <%= Spree.t('gls_carorder.title') %>
+<% end %>
+
+<%= render partial: 'spree/admin/gls/form' %>
+<hr>
+<%= render partial: 'spree/admin/gls/parcel_list' %>

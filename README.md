@@ -1,10 +1,10 @@
-# Spree DPD
+# Spree GLS
 
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
         
-        gem 'spree_dpd', github: 'mrbrdo/spree_dpd'
+        gem 'spree_gls', github: 'mrbrdo/spree_gls'
 
 2. Install the gem using Bundler:
 
@@ -12,9 +12,9 @@
         
 3. Configure:
 
-        DpdClient.configure(
-          username: ENV['DPD_USER'],
-          password: ENV['DPD_PASS'],
+        GlsClient.configure(
+          username: ENV['GLS_USER'],
+          password: ENV['GLS_PASS'],
           api_url: 'https://easyship.si/api/',
           sender_data: {
             name: "Company",

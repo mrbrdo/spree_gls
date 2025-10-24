@@ -1,9 +1,9 @@
-require 'dpd_client'
+require 'gls_client'
 
-namespace :dpd do
-  desc 'Create DPD carorder'
+namespace :gls do
+  desc 'Create GLS carorder'
   task carorder: :environment do
-    puts "Creating DPD carorder..."
+    puts "Creating GLS carorder..."
     date_choice = 2
     if DateTime.now.hour < 15
       puts "Choose:\n1.  Today\n2.  Tomorrow"
@@ -17,6 +17,6 @@ namespace :dpd do
       time_from += 1.day
       time_to += 1.day
     end
-    DpdClient.new.create_carorder(time_from, time_to)
+    GlsClient.new.create_carorder(time_from, time_to)
   end
 end

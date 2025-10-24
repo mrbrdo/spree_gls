@@ -1,4 +1,4 @@
-require 'spree_dpd'
+require 'spree_gls'
 
 path = File.expand_path(__dir__)
 Dir.glob("#{path}/tasks/**/*.rake").each { |f| import f }

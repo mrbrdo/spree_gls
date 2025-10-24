@@ -1,12 +1,12 @@
 <%= render 'order_actions', order: @order, events: @order_events %>
 
-<%= render 'spree/admin/shared/order_tabs', current: :dpd %>
+<%= render 'spree/admin/shared/order_tabs', current: :gls %>
 
 <% content_for :page_title do %>
-  / DPD
+  / GLS
 <% end %>
 
-<div data-hook="admin_dpd_order_edit_header">
+<div data-hook="admin_gls_order_edit_header">
   <%= render 'spree/admin/shared/error_messages', target: @order %>
 </div>
 
@@ -16,26 +16,26 @@
 
 <% if @tracking_all %>
   <p>
-    <b>DPD tracking:</b><br>
+    <b>GLS tracking:</b><br>
     <% @tracking_all.each do |tracking| %>
       <%= tracking %><br>
     <% end %>
   </p>
 <% end %>
 
-<%= form_tag spree.admin_dpd_orders_url do %>
-  <div data-hook="admin_order_dpd_form_fields">
-    <div class="card mb-3" data-hook="custom_dpd_order">
+<%= form_tag spree.admin_gls_orders_url do %>
+  <div data-hook="admin_order_gls_form_fields">
+    <div class="card mb-3" data-hook="custom_gls_order">
 
       <div class="card-header">
         <h1 class="card-title mb-0 h5">
-          <%= Spree.t(:custom_dpd_order) %>
+          <%= Spree.t(:custom_gls_order) %>
         </h1>
       </div>
 
       <div class="card-body">
         <%= hidden_field_tag 'order_number', @order.number %>
-        <div data-hook="custom_dpd_order_fields" class="row">
+        <div data-hook="custom_gls_order_fields" class="row">
           <div class="col-12 col-lg-8">
             <div class="form-group">
               <%= label_tag 'weight_kg', Spree.t(:weight_kg) %>
