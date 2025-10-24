@@ -8,12 +8,32 @@ class GlsApi
   API_BASE_URL = 'https://api.mygls.si'
   DEFAULT_TIMEOUT = 600
   
+  class << self
+    attr_reader :configuration
+    def configure(config)
+      @configuration = config.dup
+    end
+
+    def format_date(date, format = :json)
+      time = date.is_a?(Time) ? date : Time.parse(date.to_s)
+      
+      if format == :json
+        # JSON format: /Date(milliseconds)/
+        "/Date(#{time.to_i * 1000})/"
+      else
+        # XML format: ISO 8601
+        time.strftime('%Y-%m-%dT%H:%M:%S')
+      end
+    end
+  end
+  
   attr_reader :username, :format, :client_number
   
-  def initialize(username:, password:, client_number:, fmt: :json, timeout: DEFAULT_TIMEOUT)
-    @username = username
-    @password = password
-    @client_number = client_number
+  def initialize(username: nil, password: nil, client_number: nil, fmt: :json, timeout: DEFAULT_TIMEOUT)
+    config = self.class.configuration || {}
+    @username = username || config[:username]
+    @password = password || config[:password]
+    @client_number = client_number || config[:client_number]
     @format = fmt
     @timeout = timeout
     @connection = build_connection
@@ -69,10 +89,10 @@ class GlsApi
     method_name = 'GetParcelList'
     
     data = {
-      PickupDateFrom: format_date(pickup_date_from),
-      PickupDateTo: format_date(pickup_date_to),
-      PrintDateFrom: print_date_from ? format_date(print_date_from) : nil,
-      PrintDateTo: print_date_to ? format_date(print_date_to) : nil
+      PickupDateFrom: GlsApi.format_date(pickup_date_from, @format),
+      PickupDateTo: GlsApi.format_date(pickup_date_to, @format),
+      PrintDateFrom: print_date_from ? GlsApi.format_date(print_date_from, @format) : nil,
+      PrintDateTo: print_date_to ? GlsApi.format_date(print_date_to, @format) : nil
     }
     
     request_body = build_request(method_name: method_name, data: data)
@@ -123,18 +143,6 @@ class GlsApi
     else
       # XML format: Base64 string
       Base64.strict_encode64(hash)
-    end
-  end
-  
-  def format_date(date)
-    time = date.is_a?(Time) ? date : Time.parse(date.to_s)
-    
-    if @format == :json
-      # JSON format: /Date(milliseconds)/
-      "/Date(#{time.to_i * 1000})/"
-    else
-      # XML format: ISO 8601
-      time.strftime('%Y-%m-%dT%H:%M:%S')
     end
   end
   

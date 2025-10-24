@@ -4,12 +4,3 @@ en:
     admin:
       tab:
         gls: GLS
-    gls_carorder:
-      title: GLS Carorder
-      time_from: Time From
-      time_to: Time To
-      today: Today
-      tomorrow: Tomorrow
-      date_custom: Custom Date
-      date: Date
-      created_successfully: 'GLS Carorder created successfully for %{date} between %{time_from}-%{time_to}!'

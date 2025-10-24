@@ -7,15 +7,6 @@ sl-SI:
       order:
         events:
           gls_label: GLS Nalepka
-    gls_carorder:
-      title: Naroči GLS Prevzem
-      time_from: Ura od
-      time_to: Ura do
-      today: Danes
-      tomorrow: Jutri
-      date_custom: Na datum
-      date: Datum
-      created_successfully: 'GLS prevzem je bil uspešno naročen za %{date} med %{time_from}-%{time_to}!'
     gls_parcels:
       title: GLS Pošiljke
       order_number: Št. Naročila

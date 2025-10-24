@@ -9,7 +9,7 @@ module SpreeGls
     attr_reader :shipment
     def initialize(shipment)
       @shipment = shipment
-      @gls_client = GlsClient.new
+      @gls_api = GlsApi.new
     end
 
     def create_order_gls
@@ -23,43 +23,56 @@ module SpreeGls
     def create_order_gls_weight(shipment, weight_kg)
       order = shipment.order
 
-      contact_person = nil
-      name1 = order.shipping_address.company
-      name2 = "#{order.shipping_address.firstname} #{order.shipping_address.lastname}"
-      if name1.blank?
-        name1 = name2
-        name2 = ""
-      else
-        contact_person = name2
-      end
+      contact_name = "#{order.shipping_address.firstname} #{order.shipping_address.lastname}"
+      name = order.shipping_address.company.presence || contact_name
 
       street = order.shipping_address.address1
+      house_number = ""
       if order.shipping_address.address2.present?
-        # some people write street number into address2
         street += " " + order.shipping_address.address2
       end
-      rPropNum = ""
       if street =~ /\A(.+)\s(\d+[a-z]?)\s*\z/
         street = $1
-        rPropNum = $2
+        house_number = $2
       end
 
-      @gls_client.create_package(
-        name1: name1[0,35],
-        name2: name2[0,35],
-        contact: contact_person,
-        street: street,
-        rPropNum: rPropNum, # street number
-        city: order.shipping_address.city,
-        country: order.shipping_address.country.iso,
-        pcode: order.shipping_address.zipcode,
-        email: order.email,
-        phone: order.shipping_address.phone,
-        weight: weight_kg.to_s, # delimited by dot
-        order_number: order.number, # reference
-        parcel_type: "D", # GLS Classic
-        num_of_parcel: "1"
-      )
+      config = GlsApi.configuration
+      sender_address = config[:sender_address] || {}
+
+      parcel_data = {
+        ClientNumber: @gls_api.client_number.to_i,
+        ClientReference: order.number,
+        CODAmount: 0,
+        Content: '',
+        Count: 1,
+        DeliveryAddress: {
+          City: order.shipping_address.city,
+          ContactEmail: order.email,
+          ContactName: contact_name,
+          ContactPhone: order.shipping_address.phone,
+          CountryIsoCode: order.shipping_address.country.iso,
+          HouseNumber: house_number,
+          Name: name,
+          Street: street,
+          ZipCode: order.shipping_address.zipcode
+        },
+        PickupAddress: {
+          City: sender_address[:city],
+          ContactEmail: sender_address[:email],
+          ContactName: sender_address[:contact_name],
+          ContactPhone: sender_address[:phone],
+          CountryIsoCode: sender_address[:country_iso_code] || 'SI',
+          HouseNumber: sender_address[:house_number],
+          Name: sender_address[:name],
+          Street: sender_address[:street],
+          ZipCode: sender_address[:zip_code]
+        },
+        PickupDate: (Date.tomorrow.to_time(:local) + 9.hours),
+        ServiceList: []
+      }
+
+      parcel_ids = @gls_api.prepare_labels(parcels: [parcel_data])
+      parcel_ids.first
     end
   end
 end

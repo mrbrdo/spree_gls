@@ -6,22 +6,27 @@
         
         gem 'spree_gls', github: 'mrbrdo/spree_gls'
 
-2. Install the gem using Bundler:
+2. Install the gem using Bundler and copy migrations:
 
         bundle install
+        rake spree_gls:install:migrations
         
 3. Configure:
 
-        GlsClient.configure(
+        GlsApi.configure(
           username: ENV['GLS_USER'],
           password: ENV['GLS_PASS'],
-          api_url: 'https://easyship.si/api/',
-          sender_data: {
+          client_number: ENV['GLS_CLIENT_NUMBER'],
+          sender_address: {
             name: "Company",
-            street: "Street address",
-            postal: "Postal code",
+            street: "Street name",
+            house_number: "123",
+            zip_code: "1000",
             city: "City",
-            phone: "Phone no."
+            country_iso_code: "SI",
+            phone: "Phone no.",
+            email: "email@example.com",
+            contact_name: "Contact Person"
           })
 
 3. Restart your server

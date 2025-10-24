@@ -8,7 +8,4 @@ require 'sass/rails'
 
 module SpreeGls
   extend Dry::Configurable
-
-  setting :pickup_time_from,  default: '9:00'
-  setting :pickup_time_to,    default: '14:30'
 end
