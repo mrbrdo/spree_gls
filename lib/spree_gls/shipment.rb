@@ -36,13 +36,19 @@ module SpreeGls
         house_number = $2
       end
 
+      cod_amount = 0
+      payment = shipment.order.payments.first
+      if payment.payment_method.type == "Spree::PaymentMethod::PhysicalPayment"
+        cod_amount = payment.amount.to_f.round(2)
+      end
+
       config = GlsApi.configuration
       sender_address = config[:sender_address] || {}
 
       parcel_data = {
         ClientNumber: @gls_api.client_number.to_i,
         ClientReference: order.number,
-        CODAmount: 0,
+        CODAmount: cod_amount,
         Content: '',
         Count: 1,
         DeliveryAddress: {
@@ -67,7 +73,7 @@ module SpreeGls
           Street: sender_address[:street],
           ZipCode: sender_address[:zip_code]
         },
-        PickupDate: (Date.tomorrow.to_time(:local) + 9.hours),
+        PickupDate: GlsApi.format_date(Date.tomorrow.to_time(:local) + 9.hours, :json),
         ServiceList: []
       }
 
