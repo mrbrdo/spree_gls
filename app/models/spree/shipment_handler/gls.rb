@@ -5,7 +5,7 @@ module Spree
         super
 
         # If tracking code was manually set, don't create new GLS order
-        if @shipment.state == 'shipped' && @shipment.tracking.blank?
+        if @shipment.state == 'shipped' && (@shipment.tracking.blank? || @shipment.tracking == 'gls')
           tracking_all = SpreeGls::Shipment.new(@shipment).create_order_gls
           # TODO: there can be multiple tracking codes, handle this
           tracking = tracking_all.first
