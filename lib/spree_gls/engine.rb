@@ -11,7 +11,14 @@ module SpreeGls
       g.test_framework :rspec
     end
 
+    module ShipmentWithGlsTracking
+      def tracked?
+        super || shipping_method.code&.start_with?("gls")
+      end
+    end
+
     def self.activate
+      ::Spree::Shipment.prepend ShipmentWithGlsTracking
     end
 
     config.to_prepare &method(:activate).to_proc
